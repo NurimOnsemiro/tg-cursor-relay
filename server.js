@@ -13,7 +13,8 @@ http.createServer((req, res) => {
     const m = u.message || u.edited_message;
     if (!m) return;
     const text = m.text || m.caption || '';
-    const hit = text.includes('@' + BOT) || m.reply_to_message?.from?.username === BOT;
+    const hit = text.toLowerCase().includes('@' + BOT) || m.reply_to_message?.from?.username === BOT;
+    console.log('update', m.chat && m.chat.type, 'hit', hit, 'auth', !!CURSOR_AUTH);
     if (!hit || !TARGET_URL || !CURSOR_AUTH) return;
     fetch(TARGET_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: CURSOR_AUTH }, body })
       .then(r => console.log('forwarded', r.status)).catch(e => console.error('forward failed', e.message));
