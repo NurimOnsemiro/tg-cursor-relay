@@ -16,7 +16,7 @@ http.createServer((req, res) => {
     const hit = (m.chat?.type === 'private' && m.chat.id === 8330628028) || text.toLowerCase().includes('@' + BOT) || m.reply_to_message?.from?.username === BOT;
     console.log('update', m.chat && m.chat.type, 'hit', hit, 'auth', !!CURSOR_AUTH);
     if (!hit || !TARGET_URL || !CURSOR_AUTH) return;
-    if (TG_BOT_TOKEN) fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/setMessageReaction`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: m.chat.id, message_id: m.message_id, reaction: [{ type: 'emoji', emoji: '👀' }] }) }).catch(() => {});
+    if (TG_BOT_TOKEN) fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/setMessageReaction`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: m.chat.id, message_id: m.message_id, reaction: [{ type: 'emoji', emoji: '\u{1F440}' }] }) }).catch(() => {});
     fetch(TARGET_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: CURSOR_AUTH }, body })
       .then(r => console.log('forwarded', r.status)).catch(e => console.error('forward failed', e.message));
   });
